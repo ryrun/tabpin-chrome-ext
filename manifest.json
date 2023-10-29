@@ -1,0 +1,19 @@
+{
+  "name": "My pinned Tabs",
+  "version": "1.0.0",
+  "description": "",
+  "manifest_version": 3,
+  "author": "dufte",
+  "background": {
+    "service_worker": "service_worker.js",
+    "type": "module"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": false
+  },
+  "permissions": [
+    "tabs",
+    "storage"
+  ]
+}
