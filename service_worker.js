@@ -43,6 +43,6 @@ chrome.windows.onCreated.addListener(
                     );
                 }
             );
-        }, 2000);
+        }, 5000);
     }
 )
