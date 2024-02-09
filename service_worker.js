@@ -51,7 +51,7 @@ chrome.contextMenus.create({
     id: 'openInSafari',
     title: 'Open in Safari ...',
     contexts: ['page'],
-    targetUrlPatterns: ["http://*/*", "https://*/*"]
+    documentUrlPatterns: ["http://*/*", "https://*/*"]
 });
 chrome.contextMenus.onClicked.addListener((info, tab) => {
     if (info.menuItemId === 'openInSafari') {
