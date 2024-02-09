@@ -46,3 +46,22 @@ chrome.windows.onCreated.addListener(
         }, 5000);
     }
 )
+
+chrome.contextMenus.create({
+    id: 'openInSafari',
+    title: 'Open in Safari ...',
+    contexts: ['page'],
+    targetUrlPatterns: ["http://*/*", "https://*/*"]
+});
+chrome.contextMenus.onClicked.addListener((info, tab) => {
+    if (info.menuItemId === 'openInSafari') {
+        chrome.tabs.query({
+            active: true,
+            lastFocusedWindow: true
+        }, function(tabs) {
+            // and use that tab to fill in out title and url
+            var tab = tabs[0];
+            chrome.tabs.create({url: 'x-safari-' + tab.url})
+        });
+    }
+});
