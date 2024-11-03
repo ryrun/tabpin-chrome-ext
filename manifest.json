@@ -8,6 +8,9 @@
     "service_worker": "service_worker.js",
     "type": "module"
   },
+  "omnibox": {
+    "keyword": "gs"
+  },
   "options_ui": {
     "page": "options.html",
     "open_in_tab": false

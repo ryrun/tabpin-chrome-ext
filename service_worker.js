@@ -1,6 +1,6 @@
 chrome.windows.onCreated.addListener(
     function (window) {
-        setTimeout(function(){
+        setTimeout(function () {
             chrome.storage.sync.get(
                 {urls: ''},
                 (items) => {
@@ -53,15 +53,34 @@ chrome.contextMenus.create({
     contexts: ['page'],
     documentUrlPatterns: ["http://*/*", "https://*/*"]
 });
-chrome.contextMenus.onClicked.addListener((info, tab) => {
+chrome.contextMenus.onClicked.addListener((info) => {
     if (info.menuItemId === 'openInSafari') {
         chrome.tabs.query({
             active: true,
             lastFocusedWindow: true
-        }, function(tabs) {
+        }, function (tabs) {
             // and use that tab to fill in out title and url
             var tab = tabs[0];
             chrome.tabs.create({url: 'x-safari-' + tab.url})
         });
     }
+});
+
+chrome.omnibox.setDefaultSuggestion({
+    description: "Search via ChatGPT"
+});
+
+chrome.omnibox.onInputEntered.addListener((text) => {
+    const processedText = encodeURIComponent(text);
+    const newURL = `https://chatgpt.com/?hints=search&q=${processedText}`;
+
+    chrome.tabs.query({}, function (tabs) {
+        tabs.forEach(function (tab) {
+            if (new URL(tab.url).hostname.includes("chatgpt.com") && tab.pinned) {
+                chrome.tabs.update(tab.id, {url: newURL, active: true}, () => {
+                    chrome.windows.update(tab.windowId, {focused: true});
+                });
+            }
+        });
+    });
 });
